@@ -13,11 +13,18 @@
     "host": "127.0.0.1",
     "dialect": "mysql"
   },
-  "production": {
-    "username": "root",
-    "password":"sharad",
+ // "production": {
+    //"username": "root",
+    //"password":"sharad",
+    //"database": "database_production",
+    //"host": "127.0.0.1",
+    //"dialect": "mysql"
+  //}
+ "production": {
+    "username": "sp0303",
+    "password":"sp0397",
     "database": "database_production",
-    "host": "127.0.0.1",
+    "host": "db4free.net",
     "dialect": "mysql"
   }
 }
