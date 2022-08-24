@@ -17,7 +17,7 @@
  "production": {
     "username": "sp0303",
     "password":"Coder@123",
-    "database": "database_production",
+    "database": "ecommerce",
     "host": "db4free.net",
     "dialect": "mysql"
   }
