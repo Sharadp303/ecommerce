@@ -1,7 +1,7 @@
 {
   "development": {
     "username": "sp0303",
-    "password":"Coder@123",
+    "password": "Coder@123",
     "database": "sp0397",
     "host": "db4free.net",
     "dialect": "mysql"
@@ -13,10 +13,9 @@
     "host": "127.0.0.1",
     "dialect": "mysql"
   },
-
- "production": {
+  "production": {
     "username": "sp0303",
-    "password":"Coder@123",
+    "password": "Coder@123",
     "database": "sp0397",
     "host": "db4free.net",
     "dialect": "mysql"
