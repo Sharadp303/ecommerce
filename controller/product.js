@@ -1,4 +1,4 @@
-const {Products,Sequelize} = require("../models");
+const { Products, Sequelize } = require("../models");
 
 // async function createProduct(req,res){
 //     const productdata = req.body;
@@ -12,7 +12,7 @@ const {Products,Sequelize} = require("../models");
 
 
 //     try{
-       
+
 //         const result = await Products.create({name,description,cost,quantity});
 //         res.send({msg:"product got created",result})
 //     }
@@ -20,42 +20,42 @@ const {Products,Sequelize} = require("../models");
 //         res.status(500).send({msg:"internal server err",err})
 //     }
 // }
-async function createProduct(req, res){
+async function createProduct(req, res) {
 	const productData = req.body;
-	
+
 	//if(!(productData.name && productData.cost && productData.quantity)){
 	//	res.status(400).send({msg : 'Name, Cost & Quantity is missing'})
 	//}
 
-	try{
+	try {
 		const name = productData.name;
 		const description = productData.description;
 		const cost = productData.cost;
 		const quantity = productData.quantity;
-		const CategoryId=productData.CategoryId;
+		const CategoryId = productData.CategoryId;
 
-		const result = await Products.create({name, description, cost, quantity,CategoryId});
-		res.send({msg: 'Product got created',result})
-	}catch(err){
-		res.status(500).send({msg: 'Internal server error',err})
+		const result = await Products.create({ name, description, cost, quantity, CategoryId });
+		res.send({ msg: 'Product got created', result })
+	} catch (err) {
+		res.status(500).send({ msg: 'Internal server error', err })
 	}
 }
 
 
 
-async function getProducts(req,res){
-    
-   
-    try{
-       
-        const result = await Products.findAll();
-        console.log('result',result)
-        res.send(result)
-    }
-    catch(err){
-        console.log("Error in getting products",err)
-        res.status(500).send({msg:"internal server err"})
-    }
+async function getProducts(req, res) {
+
+
+	try {
+
+		const result = await Products.findAll();
+		console.log('result', result)
+		res.send(result)
+	}
+	catch (err) {
+		console.log("Error in getting products", err)
+		res.status(500).send({ msg: "internal server err" })
+	}
 }
 
 
@@ -84,143 +84,142 @@ async function getProducts(req,res){
 //  catch(err){
 // res.status(500).send({masg:"INternal server error",err})
 //  }
- 
+
 // }
 
-async function getProductOnId(req,res){
+async function getProductOnId(req, res) {
 	const productId = req.params.id;
-	try{
+	try {
 		const result = await Products.findOne({
-			where:{
-				id:productId
+			where: {
+				id: productId
 			}
 		});
 		res.send(result)
-	}catch(err){
-		res.status(500).send({msg:'Internal server error',err})
+	} catch (err) {
+		res.status(500).send({ msg: 'Internal server error', err })
 	}
 }
 
 
 
-async function updateProduct(req,res){
-	const productData= req.body;
+async function updateProduct(req, res) {
+	const productData = req.body;
 	const productId = req.params.id;
 
-	if(!(productData.name && productData.cost && productData.quantity && productData.description))
-	{
-		res.status(400).send({msg:'name,cost,quantity & description is missing'})
+	if (!(productData.name && productData.cost && productData.quantity && productData.description)) {
+		res.status(400).send({ msg: 'name,cost,quantity & description is missing' })
 	}
-	try{
+	try {
 		const name = productData.name;
 		const description = productData.description;
 		const cost = productData.cost;
 		const quantity = productData.quantity;
 
 		const product = await Products.findOne({
-			where:{
-				id:productId
+			where: {
+				id: productId
 			}
 		})
 
-		if(product){
-		product.name =name;
-		product.cost =cost;
-		product.description =description;
-		product.quantity =quantity;
+		if (product) {
+			product.name = name;
+			product.cost = cost;
+			product.description = description;
+			product.quantity = quantity;
 
-		product.save()
+			product.save()
 
-		res.send({msg:'product got updated successfully'})
+			res.send({ msg: 'product got updated successfully' })
 
-		}else{
-			res.status(400).send({msg:'product id does not exist'})
+		} else {
+			res.status(400).send({ msg: 'product id does not exist' })
 		}
-		
-	}catch(err){
-		res.status(500).send({msg:'Internal server error',err})
+
+	} catch (err) {
+		res.status(500).send({ msg: 'Internal server error', err })
 	}
 }
 
 
-async function deleteProduct(req,res){
+async function deleteProduct(req, res) {
 	const productId = req.params.id;
-	try{
+	try {
 		await Products.destroy({
-			where: {id:productId}
+			where: { id: productId }
 		})
 
-		res.send({msg: "product delete successfully"})
-	}catch(err){
-		res.status(500).send({msg: 'Internal server error',err})
+		res.send({ msg: "product delete successfully" })
+	} catch (err) {
+		res.status(500).send({ msg: 'Internal server error', err })
 	}
 }
 
 
 
-async function filterBasedOnProduct(req,res){
+async function filterBasedOnProduct(req, res) {
 	const CategoryId = req.query.CategoryId; // ?CategoryId=3
 	const name = req.query.name;// ?name=
 	const minCost = req.query.minCost;// ?minCost=450
 	const maxCost = req.query.maxCost;// ?maxCost=350
 
-	if(CategoryId){
+	if (CategoryId) {
 		const result = await Products.findAll({
-				where: {
-					CategoryId : CategoryId
-				}
-			})
+			where: {
+				CategoryId: CategoryId
+			}
+		})
 		res.send(result);
 	}
-	if(name){
+	if (name) {
 		const result = await Products.findAll({
-				where: {
-					name : name
-				}
-			})
+			where: {
+				name: name
+			}
+		})
 		res.send(result);
 	}
-	if(minCost && maxCost){
+	if (minCost && maxCost) {
 		const result = await Products.findAll({
-			where : {
-				cost : {
-					[Sequelize.Op.gte] : minCost,
-					[Sequelize.Op.lte] : maxCost
+			where: {
+				cost: {
+					[Sequelize.Op.gte]: minCost,
+					[Sequelize.Op.lte]: maxCost
 				}
 			}
 		})
 
 		res.send(result)
 	}
-	else if(minCost){
-				const result = await Products.findAll({
-			where : {
-				cost : {
-					[Sequelize.Op.gte] : minCost
+	else if (minCost) {
+		const result = await Products.findAll({
+			where: {
+				cost: {
+					[Sequelize.Op.gte]: minCost
 				}
 			}
 		})
 
 		res.send(result)
-	} else if(maxCost){
+	} else if (maxCost) {
 		const result = await Products.findAll({
-			where : {
-				cost : {
-					[Sequelize.Op.lte] : maxCost
+			where: {
+				cost: {
+					[Sequelize.Op.lte]: maxCost
 				}
 			}
 		})
 
 		res.send(result)
 	}
-	else{
+	else {
 		const result = await Products.findAll()
 		res.send(result);
 	}
 }
 
 
-module.exports={
+module.exports = {
 	createProduct,
 	getProducts,
 	getProductOnId,
